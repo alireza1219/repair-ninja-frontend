@@ -1,10 +1,16 @@
-import { BsWrenchAdjustableCircle, BsFillPersonFill } from "react-icons/bs";
+import {
+  BsWrenchAdjustableCircle,
+  BsFillPersonFill,
+  BsColumnsGap,
+} from "react-icons/bs";
 import { Button } from "@/components/ui/button";
 import { FcServices } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { ROUTE_PATH } from "@/constants/RoutePath";
+import { useAuth } from "@/context/useAuth";
 
 const HomePage = () => {
+  const { isLoggedIn } = useAuth();
   return (
     <div className="flex flex-wrap md items-center h-screen">
       <div className="bg-white w-full md:w-1/2 h-screen flex items-center justify-center md:justify-start">
@@ -18,12 +24,22 @@ const HomePage = () => {
           <div className="description w-full sm:md:w-2/3 mt-8 md:mt-16 text-500 text-lg">
             Your One-Stop Solution for Repair Management!
           </div>
-          <Button asChild className="uppercase mt-5 text-sm font-semibold">
-            <Link to={ROUTE_PATH.LOGIN}>
-              Login
-              <BsFillPersonFill className="ml-2" />
-            </Link>
-          </Button>
+          {!isLoggedIn() && (
+            <Button asChild className="uppercase mt-5 text-sm font-semibold">
+              <Link to={ROUTE_PATH.LOGIN}>
+                Login
+                <BsFillPersonFill className="ml-2" />
+              </Link>
+            </Button>
+          )}
+          {isLoggedIn() && (
+            <Button asChild className="uppercase mt-5 text-sm font-semibold">
+              <Link to={ROUTE_PATH.DASHBOARD}>
+                Go to Dashboard
+                <BsColumnsGap className="ml-2" />
+              </Link>
+            </Button>
+          )}
         </div>
       </div>
       <div className="hidden md:block bg-slate-200 w-full md:w-1/2 h-screen relative">

@@ -1,4 +1,5 @@
 import React from "react";
+
 import { createContext, useEffect, useState } from "react";
 import { getUserProfile } from "../services/UserService";
 import { LOCAL_STORAGE_KEYS } from "../constants/common";
@@ -8,6 +9,7 @@ import { UserProfile } from "../models/User";
 
 type AuthContextType = {
   user: UserProfile | null;
+  isReady: boolean;
   loginUser: (username: string, password: string) => void;
   logout: () => void;
   isLoggedIn: () => boolean;
@@ -23,9 +25,13 @@ export const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const userProfile = async () => {
-      const response = await getUserProfile();
-      if (response) {
-        setUser(response?.data);
+      try {
+        const response = await getUserProfile();
+        if (response) {
+          setUser(response?.data);
+        }
+      } finally {
+        setIsReady(true);
       }
     };
 
@@ -35,9 +41,10 @@ export const AuthProvider = ({ children }: Props) => {
 
     if (accessToken) {
       userProfile();
+    } else {
+      // This is necessary when access_token is not available inside the local storage.
+      setIsReady(true);
     }
-
-    setIsReady(true);
   }, []);
 
   const loginUser = async (username: string, password: string) => {
@@ -60,8 +67,7 @@ export const AuthProvider = ({ children }: Props) => {
         if (userProfileRes) {
           setUser(userProfileRes.data);
         }
-        toast.success("Successfully logged in! Redirecting...");
-        // TODO: useNavigate to redirect to the dashboard.
+        toast.success("Welcome Back!");
       }
     } catch (error: any) {
       toast.error("Something went wrong. Please try again later.");
@@ -80,6 +86,7 @@ export const AuthProvider = ({ children }: Props) => {
 
   const value = {
     user: user,
+    isReady: isReady,
     loginUser: loginUser,
     logout: logout,
     isLoggedIn: isLoggedIn,
