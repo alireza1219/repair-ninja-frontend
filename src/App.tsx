@@ -1,15 +1,13 @@
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "./context/useAuth";
-import { LoginPage } from "./pages/LoginPage/LoginPage";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <AuthProvider>
-        <LoginPage />
-        <ToastContainer />
-      </AuthProvider>
-    </>
+    <AuthProvider>
+      <Outlet />
+      <ToastContainer />
+    </AuthProvider>
   );
 }
 

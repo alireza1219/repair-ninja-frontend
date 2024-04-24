@@ -1,3 +1,5 @@
+import { FaArrowLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { useAuth } from "@/context/useAuth";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -46,6 +48,13 @@ export const LoginPage = () => {
 
   return (
     <section className="w-full h-screen flex items-center justify-center px-4">
+      <Link
+        to="/"
+        className="absolute top-6 left-6 text-slate-700 hover:text-slate-800 transition-colors duration-300 flex items-center"
+      >
+        <FaArrowLeft className="mr-2" />
+        <span className="text-slate-700 hover:text-slate-800 duration-300 text-lg">Home</span>
+      </Link>
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Welcome back!</CardTitle>
