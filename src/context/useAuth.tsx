@@ -1,5 +1,5 @@
 import React from "react";
-import Spinner from "@/components/Spinner/Spinner";
+import Spinner from "@/components/Spinner";
 
 import { createContext, useEffect, useState } from "react";
 import { getUserProfile } from "../services/UserService";
