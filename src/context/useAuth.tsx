@@ -1,4 +1,5 @@
 import React from "react";
+import Spinner from "@/components/Spinner/Spinner";
 
 import { createContext, useEffect, useState } from "react";
 import { getUserProfile } from "../services/UserService";
@@ -92,7 +93,13 @@ export const AuthProvider = ({ children }: Props) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {isReady ? children : null}
+      {isReady ? (
+        children
+      ) : (
+        <div className="flex flex-row min-h-screen justify-center items-center">
+          <Spinner size={80}></Spinner>
+        </div>
+      )}
     </AuthContext.Provider>
   );
 };
