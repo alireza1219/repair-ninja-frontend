@@ -10,10 +10,10 @@ type Props = {
 
 const LoginRedirectRoute = ({ children }: Props) => {
   const location = useLocation();
-  const { isReady, isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
   const from = location.state?.from?.pathname || `/${ROUTE_PATH.DASHBOARD}`;
 
-  return isReady && isLoggedIn() ? (
+  return isLoggedIn() ? (
     <Navigate to={from} replace />
   ) : (
     <>{children}</>

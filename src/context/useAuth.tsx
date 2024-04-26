@@ -9,7 +9,6 @@ import { UserProfile } from "../models/User";
 
 type AuthContextType = {
   user: UserProfile | null;
-  isReady: boolean;
   loginUser: (username: string, password: string) => void;
   logout: () => void;
   isLoggedIn: () => boolean;
@@ -86,7 +85,6 @@ export const AuthProvider = ({ children }: Props) => {
 
   const value = {
     user: user,
-    isReady: isReady,
     loginUser: loginUser,
     logout: logout,
     isLoggedIn: isLoggedIn,

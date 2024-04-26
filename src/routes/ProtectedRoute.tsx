@@ -13,9 +13,9 @@ const ProtectedRoute = ({ children }: Props) => {
   // https://reactrouter.com/en/6.23.0/hooks/use-navigate
 
   const location = useLocation();
-  const { isReady, isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
 
-  return isReady && isLoggedIn() ? (
+  return isLoggedIn() ? (
     <>{children}</>
   ) : (
     <Navigate to={`/${ROUTE_PATH.LOGIN}`} state={{ from: location }} replace />

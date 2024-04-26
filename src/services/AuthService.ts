@@ -1,6 +1,7 @@
 import { apiClient } from "./apiClient";
 import { handleAxiosError } from "../helpers/AxiosErrorHandler";
 import { TokenCreation, TokenRenewal } from "../models/Auth";
+import { AxiosRequestConfig } from "axios";
 
 export const login = async (username: string, password: string) => {
   try {
@@ -38,7 +39,7 @@ export const refreshAccessToken = async (refreshToken: string) => {
 export const validateToken = async (token: string) => {
   try {
     const data = { token: token };
-    const config = { validateStatus: null };
+    const config: AxiosRequestConfig = { validateStatus: null };
 
     // Manually handle the status validation when using this validator:
     // A 200 HTTP response means that token is still valid.
