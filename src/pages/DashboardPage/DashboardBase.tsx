@@ -1,5 +1,5 @@
 // Hooks, Functions.
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { ROUTE_PATH } from "@/constants/RoutePath";
 import { useAuth } from "@/context/useAuth";
 
@@ -34,14 +34,14 @@ const SidebarItems: SidebarItem[] = [
     icon: LuLayoutDashboard,
     text: "Dashboard",
   },
-  { to: "#", icon: LuUser, text: "Customers" },
-  { to: "#", icon: LuUserCog, text: "Repairmen" },
-  { to: "#", icon: LuTag, text: "Categories" },
-  { to: "#", icon: LuFactory, text: "Manufacturers" },
-  { to: "#", icon: LuWrench, text: "Services" },
+  { to: "/dashboard/customers", icon: LuUser, text: "Customers" },
+  { to: "/dashboard/repairmen", icon: LuUserCog, text: "Repairmen" },
+  { to: "/dashboard/categories", icon: LuTag, text: "Categories" },
+  { to: "/dashboard/manufacturers", icon: LuFactory, text: "Manufacturers" },
+  { to: "/dashboard/services", icon: LuWrench, text: "Services" },
 ];
 
-const DashboardPage = () => {
+const DashboardBase = () => {
   const { user, logout } = useAuth();
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -106,15 +106,11 @@ const DashboardPage = () => {
           </DropdownMenu>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <div className="flex items-center">
-            <h1 className="text-lg font-semibold md:text-2xl">
-              Hello, {user?.first_name ? user.first_name : user?.username}!
-            </h1>
-          </div>
+          <Outlet />
         </main>
       </div>
     </div>
   );
 };
 
-export default DashboardPage;
+export default DashboardBase;
