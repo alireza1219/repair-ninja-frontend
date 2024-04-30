@@ -20,7 +20,7 @@ interface TableProps<T> {
   isLoading?: boolean;
 }
 
-const DashboardSimpleTable = <T extends object>({
+const SimpleTable = <T extends object>({
   columns,
   data,
   isLoading = false,
@@ -80,4 +80,4 @@ const DashboardSimpleTable = <T extends object>({
   );
 };
 
-export { DashboardSimpleTable };
+export { SimpleTable };

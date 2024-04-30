@@ -3,7 +3,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { refreshAccessToken, validateToken } from "./AuthService";
+import { refreshAccessToken, validateToken } from "./Auth";
 import { LOCAL_STORAGE_KEYS } from "../constants/common";
 
 export const apiClient = axios.create({

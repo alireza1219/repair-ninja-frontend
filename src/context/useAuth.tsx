@@ -2,11 +2,11 @@ import React from "react";
 import Spinner from "@/components/Spinner";
 
 import { createContext, useEffect, useState } from "react";
-import { getUserProfile } from "../services/UserService";
-import { LOCAL_STORAGE_KEYS } from "../constants/common";
-import { login } from "../services/AuthService";
+import { getUserProfile } from "@/services/User";
+import { LOCAL_STORAGE_KEYS } from "@/constants/common";
+import { login } from "@/services/Auth";
 import { toast } from "react-toastify";
-import { UserProfile } from "../models/User";
+import { UserProfile } from "@/models/User";
 
 type AuthContextType = {
   user: UserProfile | null;

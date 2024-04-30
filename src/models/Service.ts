@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { customerProfileSchema } from "./Customer";
+import { PaginatedResult } from "./Result";
 
 // Move this to constants directory maybe?
 // I personally think it's better to keep it here.
@@ -24,9 +25,4 @@ export const serviceListItemSchema = z.object({
 
 export type ServiceListItem = z.infer<typeof serviceListItemSchema>;
 
-export type ServiceList = {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: ServiceListItem[] | [];
-};
+export type ServiceList = PaginatedResult<ServiceListItem>

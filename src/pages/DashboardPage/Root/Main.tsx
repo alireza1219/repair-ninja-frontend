@@ -1,15 +1,18 @@
-import { DashboardCard } from "@/components/DashboardCard";
-import { Greetings } from "@/components/Greetings";
-import { getServiceStatistics } from "@/services/DashboardStatisticsService";
+// Hooks, Functions.
+import { getServiceStatistics } from "@/services/Statistic";
 import { getServiceList } from "@/services/Service";
+import { Link } from "react-router-dom";
+import { latestServicesColumns } from "./Columns";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/context/useAuth";
+import { ROUTE_PATH } from "@/constants/RoutePath";
 import { ServiceListItem } from "@/models/Service";
 import { ServiceStatistics } from "@/models/Statistics";
-import {
-  TableColumn,
-  DashboardSimpleTable,
-} from "@/components/DashboardSimpleTable";
-import { useEffect, useState } from "react";
+
+// UI Elements, Components.
+import { DashboardCard } from "@/components/DashboardCard";
+import { Greetings } from "@/components/Greetings";
+import { SimpleTable } from "@/components/SimpleTable";
 import {
   LuPackage,
   LuCheck,
@@ -25,75 +28,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ROUTE_PATH } from "@/constants/RoutePath";
-
-// FIXME: Currently crashes the whole app if you login using a regular customer account.
-// And it can't be fixed until I define the access permissions on the useAuth hook.
-const latestServicesTableConfig: TableColumn<ServiceListItem>[] = [
-  {
-    label: "ID",
-    render: (item) => item.id,
-  },
-  {
-    label: "Customer",
-    render: (item) => {
-      return (
-        <>
-          <div className="font-medium">
-            {item.customer.user_profile.first_name &&
-            item.customer.user_profile.last_name
-              ? `${item.customer.user_profile.first_name} ${item.customer.user_profile.last_name}`
-              : item.customer.user_profile.username}
-          </div>
-          <div className="hidden text-sm text-muted-foreground md:inline">
-            {item.customer.phone}
-          </div>
-        </>
-      );
-    },
-  },
-  {
-    label: "Date",
-    render: (item) => {
-      const date = new Date(item.placed_at);
-      return date.toLocaleDateString();
-    },
-  },
-  {
-    label: "Status",
-    render: (item) => {
-      const status = item.service_status;
-      const dict = {
-        R: (
-          <div className="flex w-[100px] items-center">
-            <LuPackage className="mr-2 h-4 w-4" />
-            Received
-          </div>
-        ),
-        I: (
-          <div className="flex w-[100px] items-center">
-            <LuPackageOpen className="mr-2 h-4 w-4" />
-            In Progress
-          </div>
-        ),
-        C: (
-          <div className="flex w-[100px] items-center">
-            <LuPackageCheck className="mr-2 h-4 w-4" />
-            Completed
-          </div>
-        ),
-        D: (
-          <div className="flex w-[100px] items-center">
-            <LuCheck className="mr-2 h-4 w-4" />
-            Delivered
-          </div>
-        ),
-      };
-      return dict[status];
-    },
-  },
-];
 
 const DashboardRoot = () => {
   const { user } = useAuth();
@@ -175,9 +109,9 @@ const DashboardRoot = () => {
         </CardHeader>
         <CardContent>
           {/* FIXME: overflow-x is not handled correctly in mobile phones. */}
-          <DashboardSimpleTable
+          <SimpleTable
             data={latestServices}
-            columns={latestServicesTableConfig}
+            columns={latestServicesColumns}
             isLoading={!isReady}
           />
         </CardContent>

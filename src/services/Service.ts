@@ -1,13 +1,9 @@
 import { apiClient } from "./apiClient";
 import { handleAxiosError } from "@/helpers/AxiosErrorHandler";
+import { CommonQueryParams } from "@/models/Request";
 import { ServiceList } from "@/models/Service";
 
-type ServiceRequestParams = {
-  page?: number;
-  page_size?: number;
-};
-
-export const getServiceList = async (params?: ServiceRequestParams) => {
+export const getServiceList = async (params?: CommonQueryParams) => {
   try {
     const response = await apiClient.get<ServiceList>("core/services/", {
       params: { ...params },
