@@ -7,6 +7,7 @@ import { LOCAL_STORAGE_KEYS } from "@/constants/common";
 import { login } from "@/services/Auth";
 import { toast } from "react-toastify";
 import { UserProfile } from "@/models/User";
+import { useQueryClient } from "@tanstack/react-query";
 
 type AuthContextType = {
   user: UserProfile | null;
@@ -22,6 +23,7 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isReady, setIsReady] = useState(false);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const userProfile = async () => {
@@ -82,6 +84,8 @@ export const AuthProvider = ({ children }: Props) => {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN_KEY);
     localStorage.removeItem(LOCAL_STORAGE_KEYS.REFRESH_TOKEN_KEY);
     setUser(null);
+    // Clear the query cache on logout.
+    queryClient.clear();
   };
 
   const value = {
