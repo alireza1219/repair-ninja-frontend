@@ -6,7 +6,7 @@ function App() {
   return (
     <AuthProvider>
       <Outlet />
-      <ToastContainer />
+      <ToastContainer position="bottom-right" hideProgressBar stacked />
     </AuthProvider>
   );
 }
