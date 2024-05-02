@@ -45,7 +45,9 @@ apiClient.interceptors.response.use(
       LOCAL_STORAGE_KEYS.REFRESH_TOKEN_KEY
     );
 
-    if (refreshToken && error.response.status === 401) {
+    // The `error.response` property might be undefined under various situations (like an offline network), which causes a type error.
+    // It's necessary to check for the response property definition rather than accessing its properties directly.
+    if (refreshToken && error.response && error.response.status === 401) {
       const isValidToken = await validateToken(refreshToken);
 
       if (isValidToken && isValidToken.status === 200) {

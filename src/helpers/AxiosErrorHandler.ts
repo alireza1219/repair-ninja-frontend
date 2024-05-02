@@ -20,6 +20,8 @@ export const handleAxiosError = (error: any) => {
       toast.error(err.data);
     } else if (err) {
       toast.error(`${err?.status} ${err?.statusText}`);
+    } else if (error.code === "ERR_NETWORK") {
+      toast.error("Please check your internet connection and try again.");
     } else {
       toast.error("Unexpected error. Check your console for more information.");
     }
