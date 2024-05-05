@@ -1,5 +1,5 @@
-import { ColumnDef, RowData } from "@tanstack/react-table";
 import { Category } from "@/models/Category";
+import { ColumnDef } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,14 +12,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LuMoreHorizontal, LuPenSquare, LuXCircle } from "react-icons/lu";
 
-declare module "@tanstack/react-table" {
-  interface TableMeta<TData extends RowData> {
-    onDelete: (id: number, title: string) => void;
-    onUpdate: (id: number, title: string) => void;
-  }
+interface ColumnActions {
+  onDelete: (category: Category) => void;
+  onUpdate: (category: Category) => void;
 }
 
-export const categoryColumns: ColumnDef<Category>[] = [
+// Original credits: https://github.com/TanStack/table/discussions/5312#discussioncomment-9252845
+// For our case, using this approach is a cleaner alternative to table meta.
+export const getCategoryColumns = ({
+  onDelete,
+  onUpdate,
+}: ColumnActions): ColumnDef<Category>[] => [
   {
     accessorKey: "title",
     header: "Title",
@@ -28,17 +31,8 @@ export const categoryColumns: ColumnDef<Category>[] = [
     // For reference:
     // https://github.com/TanStack/table/blob/main/examples/react/editable-data/src/main.tsx
     id: "actions",
-    cell: ({ row, table }) => {
+    cell: ({ row }) => {
       const category = row.original;
-
-      const updateHandler = () => {
-        table.options.meta?.onUpdate(category.id!, category.title);
-      };
-
-      const deleteHandler = () => {
-        table.options.meta?.onDelete(category.id!, category.title);
-      };
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -50,13 +44,13 @@ export const categoryColumns: ColumnDef<Category>[] = [
           <DropdownMenuContent align="center">
             <DropdownMenuLabel>Category ID: {category.id}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={updateHandler}>
+            <DropdownMenuItem onClick={() => onUpdate(category)}>
               <LuPenSquare className="mr-2 h-4 w-4" />
               Update Title
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={deleteHandler}
+              onClick={() => onDelete(category)}
               className="text-red-600 focus:text-red-700"
             >
               <LuXCircle className="mr-2 h-4 w-4" />
