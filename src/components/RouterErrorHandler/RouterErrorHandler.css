@@ -1,0 +1,14 @@
+.clock {
+  font-family: "Monoton", sans-serif;
+  font-size: 160px;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.clock-is-ticking {
+  animation: blink step-start 2s infinite;
+}

@@ -1,4 +1,5 @@
 import App from "@/App";
+import AccessControlledRoute from "./AccessControlledRoute";
 import DashboardBase from "@/pages/DashboardPage/Base";
 import DashboardCategories from "@/pages/DashboardPage/Categories/Main";
 import DashboardManufacturers from "@/pages/DashboardPage/Manufacturers/Main";
@@ -39,19 +40,43 @@ export const Router = createBrowserRouter([
           },
           {
             path: ROUTE_PATH.DASH_CUSTOMERS,
-            element: <p>This is customers page.</p>,
+            element: (
+              <AccessControlledRoute
+                allowedAccessLevels={["staff", "superuser"]}
+              >
+                <p>This is customers page.</p>
+              </AccessControlledRoute>
+            ),
           },
           {
             path: ROUTE_PATH.DASH_REPAIRMEN,
-            element: <p>This is repairmen page.</p>,
+            element: (
+              <AccessControlledRoute
+                allowedAccessLevels={["staff", "superuser"]}
+              >
+                <p>This is repairmen page.</p>
+              </AccessControlledRoute>
+            ),
           },
           {
             path: ROUTE_PATH.DASH_CATEGORIES,
-            element: <DashboardCategories />,
+            element: (
+              <AccessControlledRoute
+                allowedAccessLevels={["staff", "superuser"]}
+              >
+                <DashboardCategories />
+              </AccessControlledRoute>
+            ),
           },
           {
             path: ROUTE_PATH.DASH_MANUFACTURERS,
-            element: <DashboardManufacturers />,
+            element: (
+              <AccessControlledRoute
+                allowedAccessLevels={["staff", "superuser"]}
+              >
+                <DashboardManufacturers />
+              </AccessControlledRoute>
+            ),
           },
           {
             path: ROUTE_PATH.DASH_SERVICES,

@@ -58,6 +58,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Monoton";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./assets/fonts/Monoton-Regular.woff2") format("woff2");
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
