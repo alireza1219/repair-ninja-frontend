@@ -34,10 +34,30 @@ const SidebarItems: SidebarItem[] = [
     icon: LuLayoutDashboard,
     text: "Dashboard",
   },
-  { to: "/dashboard/customers", icon: LuUser, text: "Customers" },
-  { to: "/dashboard/repairmen", icon: LuUserCog, text: "Repairmen" },
-  { to: "/dashboard/categories", icon: LuTag, text: "Categories" },
-  { to: "/dashboard/manufacturers", icon: LuFactory, text: "Manufacturers" },
+  {
+    to: "/dashboard/customers",
+    icon: LuUser,
+    text: "Customers",
+    accessLevels: ["staff", "superuser"],
+  },
+  {
+    to: "/dashboard/repairmen",
+    icon: LuUserCog,
+    text: "Repairmen",
+    accessLevels: ["staff", "superuser"],
+  },
+  {
+    to: "/dashboard/categories",
+    icon: LuTag,
+    text: "Categories",
+    accessLevels: ["staff", "superuser"],
+  },
+  {
+    to: "/dashboard/manufacturers",
+    icon: LuFactory,
+    text: "Manufacturers",
+    accessLevels: ["staff", "superuser"],
+  },
   { to: "/dashboard/services", icon: LuWrench, text: "Services" },
 ];
 

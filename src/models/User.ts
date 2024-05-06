@@ -6,6 +6,9 @@ export const userProfileSchema = z.object({
   email: z.nullable(z.string()),
   first_name: z.nullable(z.string()),
   last_name: z.nullable(z.string()),
+  type: z.enum(["regular", "staff", "superuser"]),
 });
 
-export type UserProfile = z.infer<typeof userProfileSchema>
+export type UserType = "regular" | "staff" | "superuser";
+
+export type UserProfile = z.infer<typeof userProfileSchema>;

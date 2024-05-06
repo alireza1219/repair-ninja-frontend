@@ -6,7 +6,7 @@ import { getUserProfile } from "@/services/User";
 import { LOCAL_STORAGE_KEYS } from "@/constants/common";
 import { login } from "@/services/Auth";
 import { toast } from "react-toastify";
-import { UserProfile } from "@/models/User";
+import { UserProfile, UserType } from "@/models/User";
 import { useQueryClient } from "@tanstack/react-query";
 
 type AuthContextType = {
@@ -14,6 +14,7 @@ type AuthContextType = {
   loginUser: (username: string, password: string) => void;
   logout: () => void;
   isLoggedIn: () => boolean;
+  getType: () => UserType | undefined;
 };
 
 type Props = { children: React.ReactNode };
@@ -80,6 +81,10 @@ export const AuthProvider = ({ children }: Props) => {
     return !!user;
   };
 
+  const getType = () => {
+    return user?.type;
+  };
+
   const logout = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN_KEY);
     localStorage.removeItem(LOCAL_STORAGE_KEYS.REFRESH_TOKEN_KEY);
@@ -93,6 +98,7 @@ export const AuthProvider = ({ children }: Props) => {
     loginUser: loginUser,
     logout: logout,
     isLoggedIn: isLoggedIn,
+    getType: getType,
   };
 
   return (

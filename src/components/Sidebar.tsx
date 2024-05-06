@@ -1,4 +1,6 @@
 import React from "react";
+import { UserType } from "@/models/User";
+import { useAuth } from "@/context/useAuth";
 
 import { cn } from "@/lib/utils";
 import { IconType } from "react-icons";
@@ -8,6 +10,7 @@ export interface SidebarItem {
   to: string;
   text: string;
   icon: IconType;
+  accessLevels?: UserType[];
 }
 
 interface SidebarProps {
@@ -16,9 +19,21 @@ interface SidebarProps {
 
 const Sidebar = ({ items }: SidebarProps) => {
   const location = useLocation();
+
+  const { getType } = useAuth();
+  const userType = getType();
+  const filteredItems = items.filter((item) => {
+    if (!item.accessLevels) {
+      // Always include the items with no access level defined.
+      return true;
+    }
+
+    return item.accessLevels.includes(userType!);
+  });
+
   return (
     <nav className="grid items-start px-2 lg:px-4 py-6 md:py-0 gap-2 md:gap-0 text-lg md:text-sm font-medium">
-      {items.map((item, index) => (
+      {filteredItems.map((item, index) => (
         <React.Fragment key={index}>
           <Link
             to={item.to}
