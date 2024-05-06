@@ -1,4 +1,5 @@
 import { CategoryList } from "@/models/Category";
+import { CATEGORIES_CACHE_KEY } from "@/constants/common";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { listCategory } from "@/services/Category";
 import { PaginationState } from "@tanstack/react-table";
@@ -8,7 +9,7 @@ export const useCategories = (pagination: PaginationState) => {
     // For reference:
     // https://tanstack.com/query/latest/docs/framework/react/guides/queries
     // https://tanstack.com/query/latest/docs/framework/react/guides/query-keys
-    queryKey: ["categories", pagination],
+    queryKey: [CATEGORIES_CACHE_KEY, pagination],
 
     // https://tanstack.com/query/latest/docs/framework/react/guides/query-functions
     queryFn: async () => {

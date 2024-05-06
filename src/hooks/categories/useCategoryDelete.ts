@@ -1,4 +1,5 @@
 import { Category } from "@/models/Category";
+import { CATEGORIES_CACHE_KEY } from "@/constants/common";
 import { deleteCategory } from "@/services/Category";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
@@ -15,7 +16,7 @@ export const useCategoryDelete = (handleOnSuccess: callbackFn) => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["categories"],
+        queryKey: [CATEGORIES_CACHE_KEY],
       });
 
       toast.success("Successfully deleted the category.");

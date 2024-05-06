@@ -116,7 +116,7 @@ const DashboardCategories = () => {
     <>
       <div className="flex justify-between items-center">
         <div className="grid gap-1">
-          <h1 className="text-lg font-semibold md:text-2xl">Categories List</h1>
+          <h1 className="text-lg font-semibold md:text-2xl">Categories</h1>
           <p className="text-sm md:text-base text-muted-foreground">
             Manage Repair Ninja's Categories.
           </p>

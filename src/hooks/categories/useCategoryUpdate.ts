@@ -1,4 +1,5 @@
 import { Category } from "@/models/Category";
+import { CATEGORIES_CACHE_KEY } from "@/constants/common";
 import { updateCategory } from "@/services/Category";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
@@ -16,7 +17,7 @@ export const useCategoryUpdate = (handleOnSuccess: callbackFn) => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["categories"],
+        queryKey: [CATEGORIES_CACHE_KEY],
       });
 
       toast.success("Successfully updated the category.");
