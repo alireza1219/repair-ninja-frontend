@@ -11,12 +11,24 @@ import ProtectedRoute from "./ProtectedRoute";
 
 import { createBrowserRouter } from "react-router-dom";
 import { ROUTE_PATH } from "@/constants/RoutePath";
+import { RouterErrorHandler } from "@/components/RouterErrorHandler";
 
 export const Router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        path: "*",
+        element: (
+          <RouterErrorHandler
+            className="h-screen"
+            status="Not Found"
+            statusCode={404}
+            statusDetails="The page you were looking for does not exist!"
+          />
+        ),
+      },
       { path: ROUTE_PATH.HOME, element: <HomePage /> },
       {
         path: ROUTE_PATH.LOGIN,
