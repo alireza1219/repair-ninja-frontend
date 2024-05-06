@@ -1,6 +1,7 @@
 import App from "@/App";
 import DashboardBase from "@/pages/DashboardPage/Base";
 import DashboardCategories from "@/pages/DashboardPage/Categories/Main";
+import DashboardManufacturers from "@/pages/DashboardPage/Manufacturers/Main";
 import DashboardRoot from "@/pages/DashboardPage/Root/Main";
 import HomePage from "@/pages/HomePage/HomePage";
 import LoginPage from "@/pages/LoginPage/LoginPage";
@@ -50,7 +51,7 @@ export const Router = createBrowserRouter([
           },
           {
             path: ROUTE_PATH.DASH_MANUFACTURERS,
-            element: <p>This is manufacturers page.</p>,
+            element: <DashboardManufacturers />,
           },
           {
             path: ROUTE_PATH.DASH_SERVICES,
