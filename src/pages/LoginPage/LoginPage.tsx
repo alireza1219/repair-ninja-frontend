@@ -1,9 +1,5 @@
-import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/context/useAuth";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,36 +10,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-
-const loginFormSchema = z.object({
-  username: z.string().min(1, { message: "Username is required." }),
-  password: z.string().min(1, { message: "Password is required." }),
-});
-
-type LoginFormData = z.infer<typeof loginFormSchema>;
+import { FaArrowLeft } from "react-icons/fa";
+import { LoginForm } from "./components/LoginForm";
+import { OtpForm } from "./components/OtpForm";
 
 const LoginPage = () => {
-  const form = useForm<LoginFormData>({
-    resolver: zodResolver(loginFormSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-  });
+  const [isOTPLogin, setIsOTPLogin] = useState(false);
 
-  const { loginUser } = useAuth();
-
-  const loginHandler = (values: LoginFormData) => {
-    loginUser(values.username, values.password);
+  const loginModeHandler = () => {
+    setIsOTPLogin(!isOTPLogin);
   };
 
   return (
@@ -53,7 +28,9 @@ const LoginPage = () => {
         className="absolute top-6 left-6 text-slate-700 hover:text-slate-800 transition-colors duration-300 flex items-center"
       >
         <FaArrowLeft className="mr-2" />
-        <span className="text-slate-700 hover:text-slate-800 duration-300 text-lg">Home</span>
+        <span className="text-slate-700 hover:text-slate-800 duration-300 text-lg">
+          Home
+        </span>
       </Link>
       <Card className="w-full max-w-sm">
         <CardHeader>
@@ -62,43 +39,14 @@ const LoginPage = () => {
             Please enter your credentials to access your Repair Ninja account.
           </CardDescription>
         </CardHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(loginHandler)}>
-            <CardContent className="grid gap-4">
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-            <CardFooter>
-              <Button type="submit" className="w-full">
-                Login
-              </Button>
-            </CardFooter>
-          </form>
-        </Form>
+        <CardContent className="grid gap-4">
+          {isOTPLogin ? <OtpForm /> : <LoginForm />}
+        </CardContent>
+        <CardFooter>
+          <Button onClick={loginModeHandler} className="w-full" variant="link">
+            {isOTPLogin ? "Regular Login" : "PasswordLess Login"}
+          </Button>
+        </CardFooter>
       </Card>
     </section>
   );

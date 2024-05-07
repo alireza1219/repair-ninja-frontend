@@ -4,14 +4,17 @@ import Spinner from "@/components/Spinner";
 import { createContext, useEffect, useState } from "react";
 import { getUserProfile } from "@/services/User";
 import { LOCAL_STORAGE_KEYS } from "@/constants/common";
-import { login } from "@/services/Auth";
+import { login, verifyOtp } from "@/services/Auth";
 import { toast } from "react-toastify";
+import { TokenCreation } from "@/models/Auth";
 import { UserProfile, UserType } from "@/models/User";
 import { useQueryClient } from "@tanstack/react-query";
+import { handleAxiosError } from "@/helpers/AxiosErrorHandler";
 
 type AuthContextType = {
   user: UserProfile | null;
   loginUser: (username: string, password: string) => void;
+  otpLogin: (email: string, otp: string) => void;
   logout: () => void;
   isLoggedIn: () => boolean;
   getType: () => UserType | undefined;
@@ -53,28 +56,39 @@ export const AuthProvider = ({ children }: Props) => {
   const loginUser = async (username: string, password: string) => {
     try {
       const loginResponse = await login(username, password);
-
       // Check for the request response before doing anything.
       if (loginResponse) {
-        // TODO: A more secure approach to store both refresh + access tokens.
-        // Store both refresh + access tokens in local storage.
-        localStorage.setItem(
-          LOCAL_STORAGE_KEYS.ACCESS_TOKEN_KEY,
-          loginResponse.data.access
-        );
-        localStorage.setItem(
-          LOCAL_STORAGE_KEYS.REFRESH_TOKEN_KEY,
-          loginResponse.data.refresh
-        );
-        const userProfileRes = await getUserProfile();
-        if (userProfileRes) {
-          setUser(userProfileRes.data);
-        }
-        toast.success("Welcome Back!");
+        await onLoginSuccess(loginResponse.data);
       }
     } catch (error: any) {
       toast.error("Something went wrong. Please try again later.");
     }
+  };
+
+  const otpLogin = async (email: string, otp: string) => {
+    try {
+      const otpResponse = await verifyOtp(email, otp);
+      if (otpResponse) {
+        await onLoginSuccess(otpResponse.data);
+      }
+    } catch (error: any) {
+      handleAxiosError(error);
+    }
+  };
+
+  const onLoginSuccess = async (response: TokenCreation) => {
+    // TODO: A more secure approach to store both refresh + access tokens.
+    // Store both refresh + access tokens in local storage.
+    localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN_KEY, response.access);
+    localStorage.setItem(
+      LOCAL_STORAGE_KEYS.REFRESH_TOKEN_KEY,
+      response.refresh
+    );
+    const userProfileRes = await getUserProfile();
+    if (userProfileRes) {
+      setUser(userProfileRes.data);
+    }
+    toast.success("Welcome Back!");
   };
 
   const isLoggedIn = () => {
@@ -96,6 +110,7 @@ export const AuthProvider = ({ children }: Props) => {
   const value = {
     user: user,
     loginUser: loginUser,
+    otpLogin: otpLogin,
     logout: logout,
     isLoggedIn: isLoggedIn,
     getType: getType,

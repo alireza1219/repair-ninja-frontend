@@ -1,8 +1,12 @@
 export type TokenCreation = {
-    refresh: string;
-    access: string;
+  refresh: string;
+  access: string;
 };
 
 export type TokenRenewal = {
-    access: string;
-}
+  access: string;
+};
+
+export type OtpRequestResponse = {
+  message: string;
+};

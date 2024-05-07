@@ -1,6 +1,10 @@
 import { apiClient } from "./apiClient";
 import { handleAxiosError } from "../helpers/AxiosErrorHandler";
-import { TokenCreation, TokenRenewal } from "../models/Auth";
+import {
+  OtpRequestResponse,
+  TokenCreation,
+  TokenRenewal,
+} from "../models/Auth";
 import { AxiosRequestConfig } from "axios";
 
 export const login = async (username: string, password: string) => {
@@ -50,6 +54,30 @@ export const validateToken = async (token: string) => {
     return response;
   } catch (error: any) {
     // I believe the catch block here is not going to catch anything.
+    handleAxiosError(error);
+  }
+};
+
+export const requestOtp = async (email: string) => {
+  try {
+    const data = { email: email };
+
+    const response = apiClient.post<OtpRequestResponse>("otp/email/", data);
+
+    return response;
+  } catch (error: any) {
+    handleAxiosError(error);
+  }
+};
+
+export const verifyOtp = async (email: string, otp: string) => {
+  try {
+    const data = { email: email, otp: otp };
+
+    const response = apiClient.post<TokenCreation>("otp/email/verify/", data);
+
+    return response;
+  } catch (error: any) {
     handleAxiosError(error);
   }
 };
