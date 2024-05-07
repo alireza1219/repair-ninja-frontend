@@ -22,6 +22,7 @@ import {
 interface DrawerDialogProps {
   title: string;
   description?: string;
+  drawerCloseText?: string;
   children: ReactNode;
   // For reference:
   // https://www.radix-ui.com/primitives/docs/components/dialog#root
@@ -32,6 +33,7 @@ interface DrawerDialogProps {
 export const DrawerDialog = ({
   title,
   description,
+  drawerCloseText,
   children,
   open,
   onOpenChange,
@@ -64,7 +66,7 @@ export const DrawerDialog = ({
         <div className="px-4">{children}</div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline">{drawerCloseText ?? "Cancel"}</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
