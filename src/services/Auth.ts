@@ -62,11 +62,13 @@ export const requestOtp = async (email: string) => {
   try {
     const data = { email: email };
 
-    const response = apiClient.post<OtpRequestResponse>("otp/email/", data);
+    const response = await apiClient.post<OtpRequestResponse>("otp/email/", data);
 
     return response;
   } catch (error: any) {
     handleAxiosError(error);
+    // Triggers the catch block on the other side.
+    throw error;
   }
 };
 
@@ -74,7 +76,7 @@ export const verifyOtp = async (email: string, otp: string) => {
   try {
     const data = { email: email, otp: otp };
 
-    const response = apiClient.post<TokenCreation>("otp/email/verify/", data);
+    const response = await apiClient.post<TokenCreation>("otp/email/verify/", data);
 
     return response;
   } catch (error: any) {

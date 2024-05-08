@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import { TokenCreation } from "@/models/Auth";
 import { UserProfile, UserType } from "@/models/User";
 import { useQueryClient } from "@tanstack/react-query";
-import { handleAxiosError } from "@/helpers/AxiosErrorHandler";
 
 type AuthContextType = {
   user: UserProfile | null;
@@ -72,7 +71,7 @@ export const AuthProvider = ({ children }: Props) => {
         await onLoginSuccess(otpResponse.data);
       }
     } catch (error: any) {
-      handleAxiosError(error);
+      toast.error("Something went wrong. Please try again later.");
     }
   };
 
