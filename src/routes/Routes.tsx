@@ -3,6 +3,7 @@ import AccessControlledRoute from "./AccessControlledRoute";
 import DashboardBase from "@/pages/DashboardPage/Base";
 import DashboardCategories from "@/pages/DashboardPage/Categories/Main";
 import DashboardManufacturers from "@/pages/DashboardPage/Manufacturers/Main";
+import DashboardServices from "@/pages/DashboardPage/Services/Main";
 import DashboardRoot from "@/pages/DashboardPage/Root/Main";
 import HomePage from "@/pages/HomePage/HomePage";
 import LoginPage from "@/pages/LoginPage/LoginPage";
@@ -92,7 +93,7 @@ export const Router = createBrowserRouter([
           },
           {
             path: ROUTE_PATH.DASH_SERVICES,
-            element: <p>This is services page.</p>,
+            element: <DashboardServices />,
           },
         ],
       },

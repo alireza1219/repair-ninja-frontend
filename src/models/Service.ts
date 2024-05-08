@@ -23,6 +23,19 @@ export const serviceListItemSchema = z.object({
   priority: z.number().min(1).max(10),
 });
 
+export const basicServiceListItemSchema = z.object({
+  id: z.number(),
+  service_status: z.enum(SERVICE_STATUSES),
+  placed_at: z.coerce.date(),
+  last_update: z.coerce.date(),
+  description: z.string(),
+  estimation_delivery: z.coerce.date(),
+});
+
 export type ServiceListItem = z.infer<typeof serviceListItemSchema>;
 
-export type ServiceList = PaginatedResult<ServiceListItem>
+export type ServiceList = PaginatedResult<ServiceListItem>;
+
+export type BasicServiceListItem = z.infer<typeof basicServiceListItemSchema>;
+
+export type BasicServiceList = PaginatedResult<BasicServiceListItem>;

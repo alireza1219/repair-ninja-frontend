@@ -6,3 +6,5 @@ export const LOCAL_STORAGE_KEYS = {
 export const CATEGORIES_CACHE_KEY = "categories";
 
 export const MANUFACTURER_CACHE_KEY = "manufacturers";
+
+export const SERVICES_CACHE_KEY = "services";
