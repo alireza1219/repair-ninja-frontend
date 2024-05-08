@@ -1,7 +1,4 @@
-import {
-  Table as ReactTable,
-  flexRender,
-} from "@tanstack/react-table";
+import { Table as ReactTable, flexRender } from "@tanstack/react-table";
 import {
   Table,
   TableBody,
@@ -11,14 +8,23 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { DataTablePagination } from "./DataTablePagination";
+import { DataTableSkeleton } from "./DataTableSkeleton";
 
 interface DataTableProps<TData> {
   table: ReactTable<TData>;
+  isPaginated?: boolean;
+  isLoading?: boolean;
 }
 
 export function DataTable<TData>({
   table,
+  isPaginated = true,
+  isLoading = false,
 }: DataTableProps<TData>) {
+  if (isLoading) {
+    return <DataTableSkeleton columns={table.getAllColumns().length} />;
+  }
+
   return (
     <div>
       <div className="rounded-md border">
@@ -71,7 +77,7 @@ export function DataTable<TData>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      {isPaginated && <DataTablePagination table={table} />}
     </div>
   );
 }

@@ -3,6 +3,8 @@ export const LOCAL_STORAGE_KEYS = {
   REFRESH_TOKEN_KEY: "refresh_token",
 };
 
+export const STATISTICS_CACHE_KEY = "statistics";
+
 export const CATEGORIES_CACHE_KEY = "categories";
 
 export const MANUFACTURER_CACHE_KEY = "manufacturers";

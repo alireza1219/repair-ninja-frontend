@@ -8,5 +8,6 @@ export const getServiceStatistics = async () => {
     return response;
   } catch (error: any) {
     handleAxiosError(error);
+    throw error;
   }
 };
