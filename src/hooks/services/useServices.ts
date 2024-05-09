@@ -4,7 +4,7 @@ import { SERVICES_CACHE_KEY } from "@/constants/common";
 import { BasicServiceList, ServiceList } from "@/models/Service";
 import { getBasicServiceList, getServiceList } from "@/services/Service";
 
-export const useBasicServices = (pagination: PaginationState) => {
+export const useBasicServices = (pagination: PaginationState, options = {}) => {
   return useQuery<BasicServiceList>({
     queryKey: [SERVICES_CACHE_KEY, pagination],
 
@@ -17,10 +17,12 @@ export const useBasicServices = (pagination: PaginationState) => {
     },
 
     placeholderData: keepPreviousData,
+
+    ...options,
   });
 };
 
-export const useServices = (pagination: PaginationState) => {
+export const useServices = (pagination: PaginationState, options = {}) => {
   return useQuery<ServiceList>({
     queryKey: [SERVICES_CACHE_KEY, pagination],
 
@@ -33,5 +35,7 @@ export const useServices = (pagination: PaginationState) => {
     },
 
     placeholderData: keepPreviousData,
+
+    ...options,
   });
 };
