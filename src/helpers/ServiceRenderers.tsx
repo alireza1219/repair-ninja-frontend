@@ -1,5 +1,8 @@
 import { ServiceListItem } from "@/models/Service";
 import {
+  LuArrowDown,
+  LuArrowRight,
+  LuArrowUp,
   LuCheck,
   LuPackage,
   LuPackageCheck,
@@ -34,6 +37,30 @@ export const StatusRenderer = (status: ServiceListItem["service_status"]) => {
     ),
   };
   return dict[status];
+};
+
+export const PriorityRenderer = (priority: number) => {
+  if (priority < 5) {
+    return (
+      <div className="flex w-[100px] items-center">
+        <LuArrowDown className="mr-2 h-4 w-4" />
+        Low
+      </div>
+    );
+  } else if (priority === 5) {
+    return (
+      <div className="flex w-[100px] items-center">
+        <LuArrowRight className="mr-2 h-4 w-4" />
+        Medium
+      </div>
+    );
+  }
+  return (
+    <div className="flex w-[100px] items-center">
+      <LuArrowUp className="mr-2 h-4 w-4" />
+      High
+    </div>
+  );
 };
 
 export const LocalDateRenderer = (date: Date | string) => {
