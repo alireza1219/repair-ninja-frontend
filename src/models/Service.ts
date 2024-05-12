@@ -1,6 +1,6 @@
-import { z } from "zod";
-import { customerProfileSchema } from "./Customer";
+import { customerSchema } from "./Customer";
 import { PaginatedResult } from "./Result";
+import { z } from "zod";
 
 // Move this to constants directory maybe?
 // I personally think it's better to keep it here.
@@ -19,7 +19,7 @@ export const serviceListItemSchema = z.object({
   placed_at: z.coerce.date(),
   // https://zod.dev/?id=zod-enums
   service_status: z.enum(SERVICE_STATUSES),
-  customer: customerProfileSchema,
+  customer: customerSchema,
   priority: z.number().min(1).max(10),
 });
 
