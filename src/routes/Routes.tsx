@@ -1,4 +1,5 @@
 import App from "@/App";
+import CreateService from "@/pages/DashboardPage/Services/Staff/CreateService";
 import AccessControlledRoute from "./AccessControlledRoute";
 import DashboardBase from "@/pages/DashboardPage/Base";
 import DashboardCategories from "@/pages/DashboardPage/Categories/Main";
@@ -9,6 +10,7 @@ import HomePage from "@/pages/HomePage/HomePage";
 import LoginPage from "@/pages/LoginPage/LoginPage";
 import LoginRedirectRoute from "./LoginRedirectRoute";
 import ProtectedRoute from "./ProtectedRoute";
+import RetrieveService from "@/pages/DashboardPage/Services/Staff/RetrieveService";
 
 import { createBrowserRouter } from "react-router-dom";
 import { ROUTE_PATH } from "@/constants/RoutePath";
@@ -93,7 +95,32 @@ export const Router = createBrowserRouter([
           },
           {
             path: ROUTE_PATH.DASH_SERVICES,
-            element: <DashboardServices />,
+            children: [
+              {
+                path: "",
+                element: <DashboardServices />,
+              },
+              {
+                path: ":ticker",
+                element: (
+                  <AccessControlledRoute
+                    allowedAccessLevels={["staff", "superuser"]}
+                  >
+                    <RetrieveService />
+                  </AccessControlledRoute>
+                ),
+              },
+              {
+                path: ROUTE_PATH.DASH_CREATE,
+                element: (
+                  <AccessControlledRoute
+                    allowedAccessLevels={["staff", "superuser"]}
+                  >
+                    <CreateService />
+                  </AccessControlledRoute>
+                ),
+              },
+            ],
           },
         ],
       },

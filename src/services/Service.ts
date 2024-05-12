@@ -1,11 +1,19 @@
 import { apiClient } from "./apiClient";
 import { handleAxiosError } from "@/helpers/AxiosErrorHandler";
 import { CommonQueryParams } from "@/models/Request";
-import { BasicServiceList, ServiceList } from "@/models/Service";
+import {
+  BasicServiceList,
+  Service,
+  ServiceList,
+  ServicePostBody,
+  ServicePostResponse,
+} from "@/models/Service";
+
+const ENDPOINT = "core/services/";
 
 export const getServiceList = async (params?: CommonQueryParams) => {
   try {
-    const response = await apiClient.get<ServiceList>("core/services/", {
+    const response = await apiClient.get<ServiceList>(ENDPOINT, {
       params: { ...params },
     });
     return response;
@@ -17,9 +25,29 @@ export const getServiceList = async (params?: CommonQueryParams) => {
 
 export const getBasicServiceList = async (params?: CommonQueryParams) => {
   try {
-    const response = await apiClient.get<BasicServiceList>("core/services/", {
+    const response = await apiClient.get<BasicServiceList>(ENDPOINT, {
       params: { ...params },
     });
+    return response;
+  } catch (error: any) {
+    handleAxiosError(error);
+    throw error;
+  }
+};
+
+export const createService = async (data: ServicePostBody) => {
+  try {
+    const response = await apiClient.post<ServicePostResponse>(ENDPOINT, data);
+    return response;
+  } catch (error: any) {
+    handleAxiosError(error);
+    throw error;
+  }
+};
+
+export const retrieveService = async (id: number) => {
+  try {
+    const response = await apiClient.get<Service>(`${ENDPOINT}${id}/`);
     return response;
   } catch (error: any) {
     handleAxiosError(error);

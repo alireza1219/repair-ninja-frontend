@@ -7,4 +7,5 @@ export enum ROUTE_PATH {
   DASH_CATEGORIES = "categories",
   DASH_MANUFACTURERS = "manufacturers",
   DASH_SERVICES = "services",
+  DASH_CREATE = "create",
 }

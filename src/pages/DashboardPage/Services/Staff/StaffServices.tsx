@@ -6,8 +6,13 @@ import {
   PaginationState,
   useReactTable,
 } from "@tanstack/react-table";
+import { Link } from "react-router-dom";
+import { ROUTE_PATH } from "@/constants/RoutePath";
 import { useServices } from "@/hooks/services/useServices";
 import { useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { LuPlusCircle } from "react-icons/lu";
 
 const StaffServices = () => {
   const [pagination, setPagination] = useState<PaginationState>({
@@ -39,6 +44,14 @@ const StaffServices = () => {
             Manage Repair Ninja's Services.
           </p>
         </div>
+        <Link to={ROUTE_PATH.DASH_CREATE}>
+          <Button size="sm" className="h-8 gap-1">
+            <LuPlusCircle className="h-3.5 w-3.5" />
+            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+              Create Service
+            </span>
+          </Button>
+        </Link>
       </div>
       <div className="xl:col-span-2">
         <DataTable table={serviceTable} />
