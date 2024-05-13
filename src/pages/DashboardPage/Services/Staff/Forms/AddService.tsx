@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTE_PATH } from "@/constants/RoutePath";
 
 export const AddServiceForm = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   const priorities = [
@@ -35,7 +35,7 @@ export const AddServiceForm = () => {
   });
 
   const onSubmit = async (data: ServiceFormData) => {
-    const RequestBody = {
+    const requestBody = {
       customer: data.customer.value,
       assigned_to: data.assigned_to?.map((item) => item.value) || [],
       priority: data.priority.value,
@@ -44,11 +44,15 @@ export const AddServiceForm = () => {
     };
 
     try {
-      const Response = await createService(RequestBody);
-      if (Response.status === 201 && Response.data.id) {
-        toast.success("Successfully created a new service!");
-        const NewServicePath = `/${ROUTE_PATH.DASHBOARD}/${ROUTE_PATH.DASH_SERVICES}/${Response.data.id}`;
-        Navigate(NewServicePath);
+      const response = await createService(requestBody);
+      if (response.status === 201 && response.data.id) {
+        toast.success("Successfully created a new service. Redirecting...");
+        const NewServicePath = `/${ROUTE_PATH.DASHBOARD}/${ROUTE_PATH.DASH_SERVICES}/${response.data.id}`;
+        navigate(NewServicePath);
+      } else {
+        toast.error(
+          "Something went wrong with service creation. Please try again later."
+        );
       }
     } catch (error) {
       handleFormInputError(error, form.setError);
