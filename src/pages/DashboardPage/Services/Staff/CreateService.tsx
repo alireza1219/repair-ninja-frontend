@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { CreateServiceForm } from "./Forms/CreateServiceForm";
+import { AddServiceForm } from "./Forms/AddService";
 import { Link } from "react-router-dom";
 import { LuArrowLeft } from "react-icons/lu";
 import { ROUTE_PATH } from "@/constants/RoutePath";
@@ -20,7 +20,7 @@ const CreateService = () => {
           </Button>
         </Link>
       </div>
-      <CreateServiceForm />
+      <AddServiceForm />
     </>
   );
 };

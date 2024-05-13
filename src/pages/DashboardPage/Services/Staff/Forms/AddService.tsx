@@ -16,7 +16,7 @@ import { handleFormInputError } from "@/helpers/FormInputErrorHandler";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_PATH } from "@/constants/RoutePath";
 
-export const CreateServiceForm = () => {
+export const AddServiceForm = () => {
   const Navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
