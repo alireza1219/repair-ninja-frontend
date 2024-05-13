@@ -21,9 +21,9 @@ export const CreateServiceForm = () => {
   const [open, setOpen] = useState(false);
 
   const priorities = [
-    { value: 1, label: "Low" },
+    { value: 1, label: "High" },
     { value: 5, label: "Medium" },
-    { value: 10, label: "High" },
+    { value: 10, label: "Low" },
   ];
 
   const form = useForm<ServiceFormData>({

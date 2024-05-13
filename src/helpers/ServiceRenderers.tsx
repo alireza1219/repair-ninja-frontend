@@ -43,8 +43,8 @@ export const PriorityRenderer = (priority: number) => {
   if (priority < 5) {
     return (
       <div className="flex w-[100px] items-center">
-        <LuArrowDown className="mr-2 h-4 w-4" />
-        Low
+        <LuArrowUp className="mr-2 h-4 w-4" />
+        High
       </div>
     );
   } else if (priority === 5) {
@@ -57,8 +57,8 @@ export const PriorityRenderer = (priority: number) => {
   }
   return (
     <div className="flex w-[100px] items-center">
-      <LuArrowUp className="mr-2 h-4 w-4" />
-      High
+      <LuArrowDown className="mr-2 h-4 w-4" />
+      Low
     </div>
   );
 };
