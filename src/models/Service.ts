@@ -37,7 +37,7 @@ export const basicServiceListItemSchema = z.object({
 export const serviceSchema = z.object({
   id: z.number(),
   assigned_to: z.array(repairmanSchema),
-  customer: z.array(customerSchema),
+  customer: customerSchema,
   service_status: z.enum(SERVICE_STATUSES),
   placed_at: z.coerce.date(),
   last_update: z.coerce.date(),
