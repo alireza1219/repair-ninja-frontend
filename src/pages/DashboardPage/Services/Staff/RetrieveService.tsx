@@ -3,6 +3,7 @@ import { useRetrieveService } from "@/hooks/services/useRetrieveService";
 import { useParams } from "react-router-dom";
 import { ROUTE_PATH } from "@/constants/RoutePath";
 
+import NavigationButton from "@/components/NavigationButton";
 import Spinner from "@/components/Spinner";
 import { RouterErrorHandler } from "@/components/RouterErrorHandler";
 
@@ -36,9 +37,19 @@ const RetrieveService = () => {
   }
 
   return (
-    <div>
-      {CurrentService.data ? CurrentService.data.service_status : "Not found"}
-    </div>
+    <>
+      <div className="flex justify-between items-center">
+        <div className="grid gap-1">
+          <h1 className="text-lg font-semibold md:text-2xl">
+            Service #{CurrentService.data!.id}
+          </h1>
+        </div>
+        <NavigationButton
+          to={`/${ROUTE_PATH.DASHBOARD}/${ROUTE_PATH.DASH_SERVICES}`}
+          className="h-8 gap-1"
+        />
+      </div>
+    </>
   );
 };
 
