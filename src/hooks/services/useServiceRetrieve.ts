@@ -3,7 +3,7 @@ import { SERVICES_CACHE_KEY } from "@/constants/common";
 import { Service } from "@/models/Service";
 import { retrieveService } from "@/services/Service";
 
-export const useRetrieveService = (id: number, options = {}) => {
+export const useServiceRetrieve = (id: number, options = {}) => {
   return useQuery<Service>({
     queryKey: [SERVICES_CACHE_KEY, id],
 

@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { useRetrieveService } from "@/hooks/services/useRetrieveService";
+import { useServiceRetrieve } from "@/hooks/services/useServiceRetrieve";
 import { useParams } from "react-router-dom";
 import { ROUTE_PATH } from "@/constants/RoutePath";
 
@@ -9,7 +9,7 @@ import { RouterErrorHandler } from "@/components/RouterErrorHandler";
 
 const RetrieveService = () => {
   const { ticker } = useParams();
-  const CurrentService = useRetrieveService(parseInt(ticker!), {
+  const CurrentService = useServiceRetrieve(parseInt(ticker!), {
     retry: false,
   });
 
