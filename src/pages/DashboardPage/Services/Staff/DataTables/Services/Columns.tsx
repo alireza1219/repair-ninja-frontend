@@ -15,9 +15,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LuMoreHorizontal, LuTerminal } from "react-icons/lu";
+import { LuMoreHorizontal, LuView, LuXCircle } from "react-icons/lu";
 
-export const getStaffServiceColumns: ColumnDef<ServiceListItem>[] = [
+interface ColumnActions {
+  onDelete: (service_id: number) => void;
+  onView: (service_id: number) => void;
+}
+
+export const getStaffServiceColumns = ({
+  onDelete,
+  onView,
+}: ColumnActions): ColumnDef<ServiceListItem>[] => [
   {
     accessorKey: "id",
     header: "ID",
@@ -84,9 +92,17 @@ export const getStaffServiceColumns: ColumnDef<ServiceListItem>[] = [
           <DropdownMenuContent align="center">
             <DropdownMenuLabel>Service ID: {serviceItem.id}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => console.log(serviceItem)}>
-              <LuTerminal className="mr-2 h-4 w-4" />
-              Console Logger
+            <DropdownMenuItem onClick={() => onView(serviceItem.id)}>
+              <LuView className="mr-2 h-4 w-4" />
+              View
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className="text-red-600 focus:text-red-700"
+              onClick={() => onDelete(serviceItem.id)}
+            >
+              <LuXCircle className="mr-2 h-4 w-4" />
+              Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -6,24 +6,41 @@ import {
   PaginationState,
   useReactTable,
 } from "@tanstack/react-table";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTE_PATH } from "@/constants/RoutePath";
+import { useMemo, useState } from "react";
 import { useServices } from "@/hooks/services/useServices";
-import { useState } from "react";
+import { useServiceDelete } from "@/hooks/services/useServiceDelete";
 
+import Spinner from "@/components/Spinner";
 import { Button } from "@/components/ui/button";
+import { DrawerDialog } from "@/components/DrawerDialog";
 import { LuPlusCircle } from "react-icons/lu";
 
 const StaffServices = () => {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [serviceID, setServiceID] = useState(0);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
-
   const listServices = useServices(pagination);
+  const deleteService = useServiceDelete(() => setOpen(false));
+  const serviceColumns = useMemo(
+    () =>
+      getStaffServiceColumns({
+        onDelete: (id) => {
+          setServiceID(id);
+          setOpen(true);
+        },
+        onView: (id) => navigate(`${id}`),
+      }),
+    []
+  );
 
   const serviceTable = useReactTable({
-    columns: getStaffServiceColumns,
+    columns: serviceColumns,
     data: listServices.data?.results ?? [],
     manualPagination: true,
     rowCount: listServices.data?.count,
@@ -56,6 +73,22 @@ const StaffServices = () => {
       <div className="xl:col-span-2">
         <DataTable table={serviceTable} />
       </div>
+      <DrawerDialog
+        open={open}
+        onOpenChange={(open: boolean) => setOpen(open)}
+        title="Service Action"
+      >
+        <p>Are you sure you want to delete this service?</p>
+        <Button
+          className="mt-6 w-full"
+          variant="destructive"
+          disabled={deleteService.isPending}
+          onClick={() => deleteService.mutateAsync(serviceID)}
+        >
+          {deleteService.isPending && <Spinner className="mr-2" size={16} />}
+          Delete Service
+        </Button>
+      </DrawerDialog>
     </>
   );
 };

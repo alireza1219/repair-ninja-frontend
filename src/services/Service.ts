@@ -54,3 +54,13 @@ export const retrieveService = async (id: number) => {
     throw error;
   }
 };
+
+export const deleteService = async (id: number) => {
+  try {
+    const response = await apiClient.delete<void>(`${ENDPOINT}${id}/`);
+    return response;
+  } catch (error: any) {
+    handleAxiosError(error);
+    throw error;
+  }
+};
