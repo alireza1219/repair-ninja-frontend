@@ -46,7 +46,7 @@ export const AddServiceForm = () => {
     try {
       const response = await createService(requestBody);
       if (response.status === 201 && response.data.id) {
-        toast.success("Successfully created a new service. Redirecting...");
+        toast.success("Successfully created a new service.");
         const NewServicePath = `/${ROUTE_PATH.DASHBOARD}/${ROUTE_PATH.DASH_SERVICES}/${response.data.id}`;
         navigate(NewServicePath);
       } else {

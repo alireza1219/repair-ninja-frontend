@@ -1,4 +1,4 @@
-import { ServiceListItem } from "@/models/Service";
+import { Service } from "@/models/Service";
 import {
   LuArrowDown,
   LuArrowRight,
@@ -9,7 +9,7 @@ import {
   LuPackageOpen,
 } from "react-icons/lu";
 
-export const StatusRenderer = (status: ServiceListItem["service_status"]) => {
+export const StatusRenderer = (status: Service["service_status"]) => {
   const dict = {
     R: (
       <div className="flex w-[100px] items-center">
@@ -71,4 +71,12 @@ export const LocalDateRenderer = (date: Date | string) => {
 export const LocalDateTimeRenderer = (date: Date | string) => {
   const dateObject = new Date(date);
   return `${dateObject.toLocaleDateString()}, ${dateObject.toLocaleTimeString()}`;
+};
+
+export const RemainingDaysCalculator = (until: string, from = "") => {
+  // Note: This is not localized and it's UTC based.
+  const untilDate = new Date(until);
+  const fromDate = from ? new Date(from) : new Date();
+  const timeDiff = untilDate.getTime() - fromDate.getTime();
+  return Math.ceil(timeDiff / (1000 * 3600 * 24));
 };

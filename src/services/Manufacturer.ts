@@ -17,6 +17,23 @@ export const listManufacturer = async (params?: CommonQueryParams) => {
   }
 };
 
+export const loadManufacturersAsOptions = (
+  // TODO: Debouncing the input.
+  inputValue: string,
+  callback: (options: any) => void
+) => {
+  listManufacturer({ search: inputValue ? inputValue : "" }).then(
+    (response) => {
+      callback(
+        response.data?.results.map(({ id, name }) => ({
+          value: id,
+          label: name,
+        }))
+      );
+    }
+  );
+};
+
 export const createManufacturer = async (name: string) => {
   try {
     const data = { name: name };

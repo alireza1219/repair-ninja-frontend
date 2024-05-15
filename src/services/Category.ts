@@ -17,6 +17,21 @@ export const listCategory = async (params?: CommonQueryParams) => {
   }
 };
 
+export const loadCategoriesAsOptions = (
+  // TODO: Debouncing the input.
+  inputValue: string,
+  callback: (options: any) => void
+) => {
+  listCategory({ search: inputValue ? inputValue : "" }).then((response) => {
+    callback(
+      response.data?.results.map(({ id, title }) => ({
+        value: id,
+        label: title,
+      }))
+    );
+  });
+};
+
 export const createCategory = async (title: string) => {
   try {
     const data = { title: title };
