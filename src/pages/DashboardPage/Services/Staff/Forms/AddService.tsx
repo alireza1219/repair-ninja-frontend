@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { loadCustomersAsOptions } from "@/services/Customer";
 import { loadRepairmenAsOptions } from "@/services/Repairman";
 import { useForm } from "react-hook-form";
@@ -34,13 +35,19 @@ export const AddServiceForm = () => {
     },
   });
 
-  const onSubmit = async (data: ServiceFormData) => {
+  const onSubmit = async ({
+    customer,
+    assigned_to,
+    priority,
+    estimation_delivery,
+    description,
+  }: ServiceFormData) => {
     const requestBody = {
-      customer: data.customer.value,
-      assigned_to: data.assigned_to?.map((item) => item.value) || [],
-      priority: data.priority.value,
-      estimation_delivery: data.estimation_delivery.toISOString().split("T")[0],
-      description: data.description || "",
+      customer: customer.value,
+      assigned_to: assigned_to?.map((item) => item.value) || [],
+      priority: priority.value,
+      estimation_delivery: format(estimation_delivery, "yyyy-MM-dd"),
+      description: description || "",
     };
 
     try {

@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { handleFormInputError } from "@/helpers/FormInputErrorHandler";
 import { loadRepairmenAsOptions } from "@/services/Repairman";
 import { SERVICES_CACHE_KEY } from "@/constants/common";
@@ -69,14 +70,19 @@ export const UpdateServiceForm = ({ serviceId, defaultValues }: Props) => {
     defaultValues: defaultFormData,
   });
 
-  const onSubmit = async (data: ServiceUpdateData) => {
-    debugger;
+  const onSubmit = async ({
+    service_status,
+    priority,
+    description,
+    estimation_delivery,
+    assigned_to,
+  }: ServiceUpdateData) => {
     const requestBody = {
-      service_status: data.service_status.value,
-      priority: data.priority.value,
-      description: data.description || "",
-      estimation_delivery: data.estimation_delivery.toISOString().split("T")[0],
-      assigned_to: data.assigned_to?.map((item) => item.value) || [],
+      service_status: service_status.value,
+      priority: priority.value,
+      description: description || "",
+      estimation_delivery: format(estimation_delivery, "yyyy-MM-dd"),
+      assigned_to: assigned_to?.map((item) => item.value) || [],
     };
 
     try {

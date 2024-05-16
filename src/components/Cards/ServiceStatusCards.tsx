@@ -10,9 +10,9 @@ import { Progress } from "@/components/ui/progress";
 import {
   LocalDateRenderer,
   LocalDateTimeRenderer,
-  RemainingDaysCalculator,
 } from "@/helpers/ServiceRenderers";
 import { Service } from "@/models/Service";
+import { differenceInDays, formatDistanceToNow, isBefore } from "date-fns";
 import {
   LuArrowDown,
   LuArrowRight,
@@ -33,20 +33,22 @@ const EstimatedCompletionCard = (
   estimation_delivery: string,
   placed_at: string
 ) => {
-  const daysDiff = RemainingDaysCalculator(estimation_delivery);
-  const totalDays = RemainingDaysCalculator(estimation_delivery, placed_at);
+  let message = "Time's up!";
+  let progressValue = 100;
+  const today = new Date();
 
-  let message = `In ${daysDiff} ${daysDiff > 1 ? "days" : "day"}.`;
-  let progressValue = Math.max(
-    0,
-    Math.min(100, 100 - (daysDiff / totalDays) * 100)
-  );
+  if (isBefore(today, estimation_delivery)) {
+    const daysDiff = differenceInDays(estimation_delivery, today);
+    const totalDays = differenceInDays(estimation_delivery, placed_at);
+    progressValue = Math.max(
+      0,
+      Math.min(100, 100 - (daysDiff / totalDays) * 100)
+    );
+    message = formatDistanceToNow(estimation_delivery, { addSuffix: true });
+  }
 
   if (["C", "D"].includes(service_status)) {
     message = "Already Completed!";
-    progressValue = 100;
-  } else if (daysDiff <= 0) {
-    message = "Time's Up!";
     progressValue = 100;
   }
 
@@ -90,14 +92,6 @@ const StatusCard = (status: Service["service_status"], size?: string) => {
 };
 
 const PlacedAtCard = (placed_at: string) => {
-  const daysDiff = Math.abs(RemainingDaysCalculator(placed_at));
-  let message =
-    daysDiff === 0
-      ? "Today"
-      : daysDiff === 1
-      ? "Yesterday"
-      : `${daysDiff} days ago`;
-
   return (
     <Card>
       <CardHeader className="pb-2">
@@ -107,7 +101,9 @@ const PlacedAtCard = (placed_at: string) => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="text-xs text-muted-foreground">{message}</div>
+        <div className="text-xs text-muted-foreground">
+          {formatDistanceToNow(placed_at, { addSuffix: true })}
+        </div>
       </CardContent>
       <CardFooter>
         <LuCalendarCheck className="w-8 h-8" />
