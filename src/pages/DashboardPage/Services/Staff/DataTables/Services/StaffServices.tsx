@@ -4,6 +4,7 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   PaginationState,
+  SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,12 +21,18 @@ import { LuPlusCircle } from "react-icons/lu";
 const StaffServices = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      id: "id",
+      desc: true,
+    },
+  ]);
   const [serviceID, setServiceID] = useState(0);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
-  const listServices = useServices(pagination);
+  const listServices = useServices(pagination, sorting);
   const deleteService = useServiceDelete(() => setOpen(false));
   const serviceColumns = useMemo(
     () =>
@@ -46,10 +53,12 @@ const StaffServices = () => {
     rowCount: listServices.data?.count,
     state: {
       pagination,
+      sorting,
     },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onPaginationChange: setPagination,
+    onSortingChange: setSorting,
   });
 
   return (

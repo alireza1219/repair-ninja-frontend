@@ -15,7 +15,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LuMoreHorizontal, LuView, LuXCircle } from "react-icons/lu";
+import {
+  LuArrowDown,
+  LuArrowUp,
+  LuArrowUpDown,
+  LuMoreHorizontal,
+  LuView,
+  LuXCircle,
+} from "react-icons/lu";
 
 interface ColumnActions {
   onDelete: (service_id: number) => void;
@@ -28,7 +35,25 @@ export const getStaffServiceColumns = ({
 }: ColumnActions): ColumnDef<ServiceListItem>[] => [
   {
     accessorKey: "id",
-    header: "ID",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          {!column.getIsSorted() && (
+            <LuArrowUpDown className="mr-2 h-4 w-4" />
+          )}
+          {column.getIsSorted() === "asc" && (
+            <LuArrowUp className="mr-2 h-4 w-4" />
+          )}
+          {column.getIsSorted() === "desc" && (
+            <LuArrowDown className="mr-2 h-4 w-4" />
+          )}
+          ID
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "customer",
@@ -70,7 +95,25 @@ export const getStaffServiceColumns = ({
   },
   {
     accessorKey: "priority",
-    header: "Priority",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          {!column.getIsSorted() && (
+            <LuArrowUpDown className="mr-2 h-4 w-4" />
+          )}
+          {column.getIsSorted() === "asc" && (
+            <LuArrowUp className="mr-2 h-4 w-4" />
+          )}
+          {column.getIsSorted() === "desc" && (
+            <LuArrowDown className="mr-2 h-4 w-4" />
+          )}
+          Priority
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       return PriorityRenderer(row.original.priority);
     },
