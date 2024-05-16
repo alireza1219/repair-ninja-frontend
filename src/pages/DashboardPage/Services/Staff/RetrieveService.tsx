@@ -7,6 +7,7 @@ import { ROUTE_PATH } from "@/constants/RoutePath";
 import CustomerInfoCard from "@/components/Cards/CustomerInfoCard";
 import NavigationButton from "@/components/NavigationButton";
 import ServiceInfoCard from "@/components/Cards/ServiceInfoCard";
+import ServiceItemsTable from "./DataTables/ServiceItems/ServiceItemsTable";
 import ServiceStatusCards from "@/components/Cards/ServiceStatusCards";
 import Spinner from "@/components/Spinner";
 import { AddServiceItem } from "./Forms/AddServiceItem";
@@ -96,7 +97,9 @@ const RetrieveService = () => {
           </div>
         </TabsContent>
         <TabsContent value="items">
-          <div className="pt-3">Here you can see the service items.</div>
+          <div className="pt-3">
+            <ServiceItemsTable serviceId={parseInt(ticker!)} />
+          </div>
         </TabsContent>
         <TabsContent value="update">
           <div className="pt-3">Here you can update the service itself.</div>
