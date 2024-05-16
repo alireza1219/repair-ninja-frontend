@@ -47,7 +47,7 @@ export const retrieveServiceItem = async (
 ) => {
   try {
     const response = await apiClient.get<ServiceItem>(
-      `${getEndpoint(serviceId)}/${itemId}/`
+      `${getEndpoint(serviceId)}${itemId}/`
     );
     return response;
   } catch (error: any) {
@@ -63,7 +63,7 @@ export const updateServiceItem = async (
 ) => {
   try {
     const response = await apiClient.patch<ServiceItemPatchBody>(
-      `${getEndpoint(serviceId)}/${itemId}/`,
+      `${getEndpoint(serviceId)}${itemId}/`,
       data
     );
     return response;
@@ -76,7 +76,7 @@ export const updateServiceItem = async (
 export const deleteServiceItem = async (serviceId: number, itemId: number) => {
   try {
     const response = await apiClient.delete<void>(
-      `${getEndpoint(serviceId)}/${itemId}/`
+      `${getEndpoint(serviceId)}${itemId}/`
     );
     return response;
   } catch (error: any) {
