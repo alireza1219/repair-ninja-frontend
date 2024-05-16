@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import Spinner from "@/components/Spinner";
 import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/FormFields/DatePicker";
 import { Form } from "@/components/ui/form";
@@ -19,6 +20,7 @@ import { ROUTE_PATH } from "@/constants/RoutePath";
 
 export const AddServiceForm = () => {
   const navigate = useNavigate();
+  const [isPending, setIsPending] = useState(false);
   const [open, setOpen] = useState(false);
 
   const priorities = [
@@ -51,6 +53,7 @@ export const AddServiceForm = () => {
     };
 
     try {
+      setIsPending(true);
       const response = await createService(requestBody);
       if (response.status === 201 && response.data.id) {
         toast.success("Successfully created a new service.");
@@ -63,6 +66,8 @@ export const AddServiceForm = () => {
       }
     } catch (error) {
       handleFormInputError(error, form.setError);
+    } finally {
+      setIsPending(false);
     }
   };
 
@@ -108,7 +113,13 @@ export const AddServiceForm = () => {
             label="Description"
           />
         </div>
-        <Button type="submit" variant="secondary" className="w-full mt-5">
+        <Button
+          disabled={isPending}
+          type="submit"
+          variant="secondary"
+          className="w-full mt-5"
+        >
+          {isPending && <Spinner className="mr-2" size={16} />}
           Create a New Service
         </Button>
       </form>

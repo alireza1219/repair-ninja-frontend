@@ -7,8 +7,10 @@ import {
   serviceItemFormSchema,
 } from "@/models/ServiceItem";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import Spinner from "@/components/Spinner";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/FormFields/Input";
@@ -21,6 +23,8 @@ interface AddServiceItemProps {
 }
 
 export const AddServiceItem = ({ serviceId }: AddServiceItemProps) => {
+  const [isPending, setIsPending] = useState(false);
+
   const onSubmit = async (values: ServiceItemFormData) => {
     // Make TypeScript compiler happy.
     if (!values.manufacturer || !values.category) {
@@ -34,6 +38,7 @@ export const AddServiceItem = ({ serviceId }: AddServiceItemProps) => {
     };
 
     try {
+      setIsPending(true);
       const response = await createServiceItem(serviceId, requestBody);
       if (response.status === 201) {
         toast.success(
@@ -47,6 +52,8 @@ export const AddServiceItem = ({ serviceId }: AddServiceItemProps) => {
       }
     } catch (error) {
       handleFormInputError(error, form.setError);
+    } finally {
+      setIsPending(false);
     }
   };
 
@@ -120,7 +127,13 @@ export const AddServiceItem = ({ serviceId }: AddServiceItemProps) => {
             control={form.control}
           />
         </div>
-        <Button type="submit" variant="secondary" className="w-full mt-5">
+        <Button
+          disabled={isPending}
+          type="submit"
+          variant="secondary"
+          className="w-full mt-5"
+        >
+          {isPending && <Spinner className="mr-2" size={16} />}
           Add Service Item
         </Button>
       </form>
