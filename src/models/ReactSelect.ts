@@ -4,7 +4,7 @@ import { z } from "zod";
 // https://github.com/JedWatson/react-select/issues/2902
 
 export const selectSchema = z.object({
-  value: z.number(),
+  value: z.any(),
   label: z.string(),
 });
 

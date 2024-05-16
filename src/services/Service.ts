@@ -7,6 +7,7 @@ import {
   ServiceList,
   ServicePostBody,
   ServicePostResponse,
+  ServiceUpdateBody,
 } from "@/models/Service";
 
 const ENDPOINT = "core/services/";
@@ -48,6 +49,16 @@ export const createService = async (data: ServicePostBody) => {
 export const retrieveService = async (id: number) => {
   try {
     const response = await apiClient.get<Service>(`${ENDPOINT}${id}/`);
+    return response;
+  } catch (error: any) {
+    handleAxiosError(error);
+    throw error;
+  }
+};
+
+export const updateService = async (id: number, data: ServiceUpdateBody) => {
+  try {
+    const response = await apiClient.patch<ServiceUpdateBody>(`${ENDPOINT}${id}/`, data);
     return response;
   } catch (error: any) {
     handleAxiosError(error);

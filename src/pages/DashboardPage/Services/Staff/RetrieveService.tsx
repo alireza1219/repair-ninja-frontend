@@ -14,6 +14,7 @@ import { AddServiceItem } from "./Forms/AddServiceItem";
 import { LocalDateTimeRenderer } from "@/helpers/ServiceRenderers";
 import { RouterErrorHandler } from "@/components/RouterErrorHandler";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { UpdateServiceForm } from "./Forms/UpdateService";
 
 type tabs = "overview" | "addItems" | "items" | "update";
 
@@ -102,7 +103,12 @@ const RetrieveService = () => {
           </div>
         </TabsContent>
         <TabsContent value="update">
-          <div className="pt-3">Here you can update the service itself.</div>
+          <div className="pt-3">
+            <UpdateServiceForm
+              defaultValues={CurrentService.data!}
+              serviceId={parseInt(ticker!)}
+            />
+          </div>
         </TabsContent>
       </Tabs>
     </>

@@ -4,6 +4,8 @@ import { repairmanSchema } from "./Repairman";
 import { selectSchema } from "./ReactSelect";
 import { z } from "zod";
 
+// FIXME: This model needs a rewrite from scratch!
+
 // Move this to constants directory maybe?
 // I personally think it's better to keep it here.
 export const SERVICE_STATUSES = [
@@ -56,6 +58,22 @@ export const serviceFormSchema = z.object({
   description: z.string().optional(),
 });
 
+// FIXME
+export const serviceUpdateSchema = serviceFormSchema
+  .omit({
+    customer: true,
+    estimation_delivery: true,
+  })
+  .extend({
+    estimation_delivery: z.date(),
+    service_status: z
+      .object({
+        value: z.string(),
+        label: z.string(),
+      })
+      .required(),
+  });
+
 export type ServiceListItem = z.infer<typeof serviceListItemSchema>;
 
 export type ServiceList = PaginatedResult<ServiceListItem>;
@@ -67,6 +85,8 @@ export type BasicServiceList = PaginatedResult<BasicServiceListItem>;
 export type Service = z.infer<typeof serviceSchema>;
 
 export type ServiceFormData = z.infer<typeof serviceFormSchema>;
+
+export type ServiceUpdateData = z.infer<typeof serviceUpdateSchema>;
 
 // FIXME: Better request typing after switching to own `Select Library`.
 // I know I'm being `too` repetitive here :(
@@ -87,4 +107,12 @@ export type ServicePostResponse = {
   estimation_delivery: string;
   customer: number;
   assigned_to: number[] | [];
+};
+
+export type ServiceUpdateBody = {
+  service_status?: string;
+  priority?: number;
+  description?: string;
+  estimation_delivery?: string;
+  assigned_to?: number[] | [];
 };
