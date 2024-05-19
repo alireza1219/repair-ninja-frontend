@@ -1,5 +1,10 @@
 import { apiClient } from "./apiClient";
-import { CustomerList } from "@/models/Customer";
+import {
+  Customer,
+  CustomerList,
+  CustomerPatchBody,
+  CustomerPostBody,
+} from "@/models/Customer";
 import { CommonQueryParams } from "@/models/Request";
 import { handleAxiosError } from "../helpers/AxiosErrorHandler";
 
@@ -10,6 +15,43 @@ export const listCustomer = async (params?: CommonQueryParams) => {
     const response = await apiClient.get<CustomerList>(ENDPOINT, {
       params: { ...params },
     });
+    return response;
+  } catch (error: any) {
+    handleAxiosError(error);
+    throw error;
+  }
+};
+
+export const createCustomer = async (data: CustomerPostBody) => {
+  try {
+    const response = await apiClient.post<Customer>(ENDPOINT, data);
+    return response;
+  } catch (error: any) {
+    handleAxiosError(error);
+    throw error;
+  }
+};
+
+export const updateCustomer = async (id: number, data: CustomerPatchBody) => {
+  try {
+    const response = await apiClient.patch<CustomerPatchBody>(
+      `${ENDPOINT}${id}/`,
+      data
+    );
+    return response;
+  } catch (error: any) {
+    handleAxiosError(error);
+    throw error;
+  }
+};
+
+export const checkPhoneAvailability = async (phone: string) => {
+  try {
+    const data = { phone: phone };
+    const response = await apiClient.post<{ phone?: string }>(
+      `${ENDPOINT}phone_availability/`,
+      data
+    );
     return response;
   } catch (error: any) {
     handleAxiosError(error);

@@ -7,6 +7,8 @@ export const STATISTICS_CACHE_KEY = "statistics";
 
 export const CATEGORIES_CACHE_KEY = "categories";
 
+export const CUSTOMERS_CACHE_KEY = "customers";
+
 export const MANUFACTURER_CACHE_KEY = "manufacturers";
 
 export const SERVICES_CACHE_KEY = "services";

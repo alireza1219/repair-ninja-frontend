@@ -7,11 +7,11 @@ import { LOCAL_STORAGE_KEYS } from "@/constants/common";
 import { login, verifyOtp } from "@/services/Auth";
 import { toast } from "react-toastify";
 import { TokenCreation } from "@/models/Auth";
-import { UserProfile, UserType } from "@/models/User";
+import { ExtendedUserProfile, UserType } from "@/models/User";
 import { useQueryClient } from "@tanstack/react-query";
 
 type AuthContextType = {
-  user: UserProfile | null;
+  user: ExtendedUserProfile | null;
   loginUser: (username: string, password: string) => void;
   otpLogin: (email: string, otp: string) => void;
   logout: () => void;
@@ -24,7 +24,7 @@ type Props = { children: React.ReactNode };
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: Props) => {
-  const [user, setUser] = useState<UserProfile | null>(null);
+  const [user, setUser] = useState<ExtendedUserProfile | null>(null);
   const [isReady, setIsReady] = useState(false);
   const queryClient = useQueryClient();
 

@@ -1,4 +1,5 @@
 import App from "@/App";
+import CustomersPage from "@/pages/CustomersPage/CustomersPage";
 import CreateService from "@/pages/DashboardPage/Services/Staff/CreateService";
 import AccessControlledRoute from "./AccessControlledRoute";
 import DashboardBase from "@/pages/DashboardPage/Base";
@@ -59,7 +60,7 @@ export const Router = createBrowserRouter([
               <AccessControlledRoute
                 allowedAccessLevels={["staff", "superuser"]}
               >
-                <p>This is customers page.</p>
+                <CustomersPage />
               </AccessControlledRoute>
             ),
           },

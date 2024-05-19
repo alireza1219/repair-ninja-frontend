@@ -5,7 +5,11 @@ export const handleFormInputError = (error: unknown, setError: any) => {
     const errors = error.response.data;
     if (typeof errors === "object") {
       Object.keys(errors).forEach((key) => {
-        setError(key, { type: "manual", message: errors[key][0] });
+        setError(key, {
+          type: "manual",
+          message:
+            typeof errors[key] === "string" ? errors[key] : errors[key][0],
+        });
       });
     }
   }

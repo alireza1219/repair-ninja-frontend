@@ -6,11 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CustomerProfile } from "@/models/Customer";
+import { Customer } from "@/models/Customer";
 import { LuMail, LuPhone, LuUser } from "react-icons/lu";
 
 interface Props extends React.ComponentProps<typeof Card> {
-  data: CustomerProfile;
+  data: Customer;
 }
 
 const CustomerInfoCard = ({
