@@ -44,7 +44,7 @@ const SidebarItems: SidebarItem[] = [
     to: "/dashboard/repairmen",
     icon: LuUserCog,
     text: "Repairmen",
-    accessLevels: ["staff", "superuser"],
+    accessLevels: ["superuser"],
   },
   {
     to: "/dashboard/categories",

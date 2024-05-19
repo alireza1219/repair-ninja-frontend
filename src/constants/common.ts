@@ -11,6 +11,8 @@ export const CUSTOMERS_CACHE_KEY = "customers";
 
 export const MANUFACTURER_CACHE_KEY = "manufacturers";
 
+export const REPAIRMEN_CACHE_KEY = "repairmen";
+
 export const SERVICES_CACHE_KEY = "services";
 
 export const ITEMS_CACHE_KEY = "items";

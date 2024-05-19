@@ -11,6 +11,7 @@ import HomePage from "@/pages/HomePage/HomePage";
 import LoginPage from "@/pages/LoginPage/LoginPage";
 import LoginRedirectRoute from "./LoginRedirectRoute";
 import ProtectedRoute from "./ProtectedRoute";
+import RepairmanPage from "@/pages/RepairmenPage/RepairmenPage";
 import RetrieveService from "@/pages/DashboardPage/Services/Staff/RetrieveService";
 
 import { createBrowserRouter } from "react-router-dom";
@@ -67,10 +68,8 @@ export const Router = createBrowserRouter([
           {
             path: ROUTE_PATH.DASH_REPAIRMEN,
             element: (
-              <AccessControlledRoute
-                allowedAccessLevels={["staff", "superuser"]}
-              >
-                <p>This is repairmen page.</p>
+              <AccessControlledRoute allowedAccessLevels={["superuser"]}>
+                <RepairmanPage />
               </AccessControlledRoute>
             ),
           },

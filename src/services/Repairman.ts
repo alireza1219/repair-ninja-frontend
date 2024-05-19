@@ -1,5 +1,10 @@
 import { apiClient } from "./apiClient";
-import { RepairmanList } from "@/models/Repairman";
+import {
+  Repairman,
+  RepairmanList,
+  RepairmanPatchBody,
+  RepairmanPostBody,
+} from "@/models/Repairman";
 import { CommonQueryParams } from "@/models/Request";
 import { handleAxiosError } from "../helpers/AxiosErrorHandler";
 
@@ -10,6 +15,43 @@ export const listRepairman = async (params?: CommonQueryParams) => {
     const response = await apiClient.get<RepairmanList>(ENDPOINT, {
       params: { ...params },
     });
+    return response;
+  } catch (error: any) {
+    handleAxiosError(error);
+    throw error;
+  }
+};
+
+export const createRepairman = async (data: RepairmanPostBody) => {
+  try {
+    const response = await apiClient.post<Repairman>(ENDPOINT, data);
+    return response;
+  } catch (error: any) {
+    handleAxiosError(error);
+    throw error;
+  }
+};
+
+export const updateRepairman = async (id: number, data: RepairmanPatchBody) => {
+  try {
+    const response = await apiClient.patch<RepairmanPatchBody>(
+      `${ENDPOINT}${id}/`,
+      data
+    );
+    return response;
+  } catch (error: any) {
+    handleAxiosError(error);
+    throw error;
+  }
+};
+
+export const checkPhoneAvailability = async (phone: string) => {
+  try {
+    const data = { phone: phone };
+    const response = await apiClient.post<{ phone?: string }>(
+      `${ENDPOINT}phone_availability/`,
+      data
+    );
     return response;
   } catch (error: any) {
     handleAxiosError(error);
