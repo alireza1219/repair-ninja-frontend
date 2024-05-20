@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { Category } from "@/models/Category";
 import { DataTable } from "@/components/DataTable";
 import { DialogModes } from "@/types/common";
@@ -78,7 +79,15 @@ const DashboardCategories = () => {
               className="mt-6 w-full"
               variant="destructive"
               disabled={deleteCategory.isPending}
-              onClick={() => deleteCategory.mutateAsync(selectedCategory!)}
+              onClick={() =>
+                deleteCategory.mutateAsync(selectedCategory!).catch((e) => {
+                  if (e instanceof AxiosError) {
+                    console.warn(
+                      `Could not delete this category. Response: ${JSON.stringify(e.response?.data)}`
+                    );
+                  }
+                })
+              }
             >
               {deleteCategory.isPending && (
                 <Spinner className="mr-2" size={16} />

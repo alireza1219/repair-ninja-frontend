@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { DataTable } from "@/components/DataTable";
 import { getStaffServiceColumns } from "./Columns";
 import {
@@ -92,7 +93,15 @@ const StaffServices = () => {
           className="mt-6 w-full"
           variant="destructive"
           disabled={deleteService.isPending}
-          onClick={() => deleteService.mutateAsync(serviceID)}
+          onClick={() =>
+            deleteService.mutateAsync(serviceID).catch((e) => {
+              if (e instanceof AxiosError) {
+                console.warn(
+                  `Could not delete this service. Response: ${JSON.stringify(e.response?.data)}`
+                );
+              }
+            })
+          }
         >
           {deleteService.isPending && <Spinner className="mr-2" size={16} />}
           Delete Service

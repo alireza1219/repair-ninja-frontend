@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { DataTable } from "@/components/DataTable";
 import { DialogModes } from "@/types/common";
 import { getManufacturerColumns } from "./Columns";
@@ -81,7 +82,15 @@ const DashboardManufacturers = () => {
               variant="destructive"
               disabled={deleteManufacturer.isPending}
               onClick={() =>
-                deleteManufacturer.mutateAsync(selectedManufacturer!)
+                deleteManufacturer
+                  .mutateAsync(selectedManufacturer!)
+                  .catch((e) => {
+                    if (e instanceof AxiosError) {
+                      console.warn(
+                        `Could not delete this manufacturer. Response: ${JSON.stringify(e.response?.data)}`
+                      );
+                    }
+                  })
               }
             >
               {deleteManufacturer.isPending && (
@@ -119,9 +128,7 @@ const DashboardManufacturers = () => {
     <>
       <div className="flex justify-between items-center">
         <div className="grid gap-1">
-          <h1 className="text-lg font-semibold md:text-2xl">
-            Manufacturers
-          </h1>
+          <h1 className="text-lg font-semibold md:text-2xl">Manufacturers</h1>
           <p className="text-sm md:text-base text-muted-foreground">
             Manage Repair Ninja's Manufacturers.
           </p>
