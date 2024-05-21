@@ -1,0 +1,11 @@
+build
+Dockerfile
+dist
+docker-compose*.yaml
+node_modules
+README.md
+.env.example
+.git
+.github
+.*ignore
+.vscode

@@ -1,0 +1,12 @@
+services:
+  vite:
+    build:
+      context: .
+      dockerfile: ./docker/dev/Dockerfile
+    restart: always
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 5173:5173
+    environment:
+      - VITE_REPAIR_NINJA_ENDPOINT=${VITE_REPAIR_NINJA_ENDPOINT}

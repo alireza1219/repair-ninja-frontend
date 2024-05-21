@@ -7,8 +7,7 @@ import { refreshAccessToken, validateToken } from "./Auth";
 import { LOCAL_STORAGE_KEYS } from "../constants/common";
 
 export const apiClient = axios.create({
-  // FIXME: Move this to environment variables instead of hard coding it.
-  baseURL: "http://127.0.0.1:8000/",
+  baseURL: import.meta.env.VITE_REPAIR_NINJA_ENDPOINT,
   headers: {
     "Content-Type": "application/json",
   },
