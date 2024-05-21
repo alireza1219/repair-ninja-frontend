@@ -1,0 +1,33 @@
+services:
+  webserver:
+    build:
+      context: .
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - webserver-dhparams-data:/vol/webserver
+      - certbot-certs-data:/etc/letsencrypt
+      - certbot-acme-data:/vol/acme
+    environment:
+      - VITE_REPAIR_NINJA_ENDPOINT=${VITE_REPAIR_NINJA_ENDPOINT}
+      - DOMAIN=${DOMAIN}
+
+  certbot:
+    build:
+      context: ./docker/certbot
+    command: echo "Run certbot manually..."
+    environment:
+      - EMAIL=${ACME_DEFAULT_EMAIL}
+      - DOMAIN=${DOMAIN}
+    volumes:
+      - certbot-certs-data:/etc/letsencrypt
+      - certbot-acme-data:/vol/acme
+    depends_on:
+      - webserver
+
+volumes:
+  webserver-dhparams-data:
+  certbot-certs-data:
+  certbot-acme-data:
