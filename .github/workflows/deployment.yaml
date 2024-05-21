@@ -21,6 +21,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script_stop: true
+          command_timeout: 60m
           script: |
             cd ${{ secrets.REMOTE_GIT_PATH }}
             git pull origin
